@@ -1,31 +1,36 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import DataTable from 'react-data-table-component';
-
 import { history } from '../_helpers';
+
+const DataTable = require('react-data-components').DataTable;
+
 function BlogsPage() {
     const posts = useSelector(state => state.posts.posts);
+    const users = useSelector(state => state.users.users);
+    const allPosts = posts.map((item, i) => {
+      const index = users.findIndex(user => user.id === item.userId);
+      return Object.assign({}, item, {name: users[index].name,username: users[index].username})
+    });
     const columns = [
         {
-          name: 'userId',
-          selector: 'userId'
+          title: 'ID',
+          prop: 'id'
         },
         {
-          name: 'id',
-          selector: 'id',
-          sortable: true
+          title: 'Name',
+          prop: 'name'
         },
         {
-          name: 'title',
-          selector: 'title',
-          sortable: true,
-          wrap: true
+          title: 'User Name',
+          prop: 'username'
         },
         {
-          name: 'body',
-          selector: 'body',
-          sortable: true,
-          wrap: true
+          title: 'Title',
+          prop: 'title'
+        },
+        {
+          title: 'Body',
+          prop: 'body'
         }
       ];
     function onRowClicked(row) {
@@ -34,17 +39,23 @@ function BlogsPage() {
         const from  = { pathname: `/blogs/${rowId}`, blog };
         history.push(from);
     }
+    
+    function buildRowOptions(row) {
+      return {
+        onClick: onRowClicked.bind({}, row)
+      };
+    }
     return (
         <div>
             {
             posts.length > 0 ? <DataTable
-                title="Posts"
-                highlightOnHover={true}
+                keys="id"
                 columns={columns}
-                data={posts}
-                pagination={true}
-                onRowClicked={onRowClicked}
-                /> : 'No details'
+                initialData={allPosts}
+                initialPageLength={10}
+                initialSortBy={{ prop: 'city', order: 'descending' }}
+                buildRowOptions={buildRowOptions}
+            /> : 'No details'
                 }
         </div>
     );

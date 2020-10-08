@@ -44,7 +44,7 @@ function HomePage() {
                     <Link to="/login">Logout</Link>
                 </div>
             </div>
-            <div style={{display: 'flex', justifyContent: "space-between"}}>
+            <div style={{display: 'flex'}}>
                 <div>
                     <div>
                         <Link to="/home/users">Users</Link>
@@ -53,7 +53,7 @@ function HomePage() {
                         <Link to="/home/blogs">Blogs</Link>
                     </div>
                 </div>
-                <div>
+                <div style={{paddingLeft: '3%'}}>
                     <Switch>
                         {routes.map((route, i) => (
                             <RouteWithSubRoutes key={i} {...route} />

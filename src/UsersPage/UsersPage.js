@@ -1,61 +1,56 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import DataTable from 'react-data-table-component';
+
+const DataTable = require('react-data-components').DataTable;
 
 function UsersPage() {
     const users = useSelector(state => state.users.users);
+    const renderAddress = (val, row) => (<div><div>{row.address.street}</div><div>{row.address.suite}</div><div>{row.address.city}</div><div>{row.address.zipcode}</div></div>);
+    const renderComapny = (val, row) => (<div><div>{row.company.name}</div><div>{row.company.catchPhrase}</div><div>{row.company.bs}</div></div>);
     const columns = [
         {
-          name: 'id',
-          selector: 'id',
+          title: 'ID',
+          prop: 'id',
         },
         {
-          name: 'name',
-          selector: 'name',
-          sortable: true,
+          title: 'Name',
+          prop: 'name',
         },
         {
-          name: 'username',
-          selector: 'username',
-          sortable: true,
+          title: 'User Name',
+          prop: 'username',
         },
         {
-          name: 'email',
-          selector: 'email',
-          sortable: true,
+          title: 'Email',
+          prop: 'email',
         },
         {
-          name: 'address',
-          selector: 'address',
-          sortable: true,
-          cell: row => <div><div>{row.address.street}</div><div>{row.address.suite}</div><div>{row.address.city}</div><div>{row.address.zipcode}</div></div>,
+          title: 'Address',
+          prop: 'address',
+          render: renderAddress
         },
           {
-            name: 'phone',
-            selector: 'phone',
-            sortable: true,
+            title: 'Phone',
+            prop: 'phone',
           },
           {
-            name: 'website',
-            selector: 'website',
-            sortable: true,
+            title: 'Website',
+            prop: 'website',
           },
           {
-            name: 'company',
-            selector: 'company',
-            sortable: true,
-            cell: row => <div><div>{row.company.name}</div><div>{row.company.catchPhrase}</div><div>{row.company.bs}</div></div>,
+            title: 'Company',
+            prop: 'company',
+            render: renderComapny
           }
       ];
-
     return (
         <div>{
             users.length > 0 ? <DataTable
-                title="Users"
-                columns={columns}
-                data={users}
-                highlightOnHover={true}
-                /> : 'No details'
+            keys="id"
+            columns={columns}
+            initialData={users}
+            initialPageLength={5}
+        /> : 'No details'
                 }
                 </div>
     );

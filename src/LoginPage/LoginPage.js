@@ -83,8 +83,8 @@ function LoginPage() {
                     </button>
                 </div>
                 <div className="form-group">
-                    {submitted && errMessage &&
-                        <div style={{color: 'red'}} className="invalid-feedback">{errMessage}</div>
+                    {!!errMessage ?
+                        <div style={{color: 'red'}}>{errMessage}</div> : null
                     }
                 </div>
             </form>

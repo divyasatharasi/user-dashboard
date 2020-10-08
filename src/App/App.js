@@ -4,8 +4,6 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { history } from '../_helpers';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
-import { UsersPage } from '../UsersPage';
-import { BlogsPage } from '../BlogsPage';
 import { BlogsPost } from '../BlogsPost';
 
 function App() {
